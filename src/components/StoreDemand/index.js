@@ -195,7 +195,17 @@ const StoreDemand = ({
       const successRouteDetail = await instance
         .post("create/route-detail", routeDetailData)
         .then((res) => res.data)
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+          toast({
+            title: "Route Calculation Error",
+            description: "There is an error, please try again later.",
+            status: "error",
+            duration: 1000,
+            isClosable: true,
+          });
+        });
 
       console.log(successRouteDetail);
 
