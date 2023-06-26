@@ -16,6 +16,7 @@ import {
   FormControl,
   FormLabel,
   FormHelperText,
+  useToast,
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -112,6 +113,7 @@ const StoreDemand = ({
       </option>
     );
   });
+  const toast = useToast();
 
   for (let i = 0; i < number; i++) {
     let tempStore = generateOptions(stores, i, selectedOptions);
@@ -252,7 +254,17 @@ const StoreDemand = ({
               return () => clearTimeout(timer);
             })
           )
-          .catch((err) => {});
+          .catch((err) => {
+            console.log(err);
+            setLoadingPhase(2);
+            toast({
+              title: "Route Calculation Error",
+              description: "There is an error, please try again later.",
+              status: "error",
+              duration: 1000,
+              isClosable: true,
+            });
+          });
       }
     }
   };
