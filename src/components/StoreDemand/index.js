@@ -176,7 +176,6 @@ const StoreDemand = ({
       setLoading(false);
       return;
     } else {
-      console.log("gak erro");
       clearErrors("gasoline_price");
     }
 
@@ -256,7 +255,7 @@ const StoreDemand = ({
           )
           .catch((err) => {
             console.log(err);
-            setLoadingPhase(2);
+            setLoading(false);
             toast({
               title: "Route Calculation Error",
               description: "There is an error, please try again later.",
