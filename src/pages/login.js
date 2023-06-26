@@ -10,6 +10,7 @@ import {
   Text,
   Link,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
@@ -25,6 +26,7 @@ const Login = () => {
   const router = useRouter();
   const toast = useToast();
   const [errForm, setErrForm] = useState("");
+  const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
     register,
@@ -43,6 +45,7 @@ const Login = () => {
       email: values.email,
       password: values.password,
     };
+    setLoading(true);
 
     instance
       .post("login", data)
@@ -70,14 +73,18 @@ const Login = () => {
             const timer = setTimeout(() => {
               setAuthenticated(true);
               router.push("/");
+              setLoading(false);
             }, 1000);
 
             return () => clearTimeout(timer);
           })
-          .catch((err) => {});
+          .catch((err) => {
+            setLoading(false);
+          });
       })
       .catch((error) => {
         setErrForm(error.response.data.detail);
+        setLoading(false);
       });
 
     unregister(["email", "password"]);
@@ -138,7 +145,7 @@ const Login = () => {
                 </Text>
 
                 <Button mt={4} isLoading={isSubmitting} type="submit">
-                  Login
+                  {loading ? <Spinner /> : "Login"}
                 </Button>
                 <Text
                   color={"red.500"}
