@@ -70,7 +70,11 @@ const RouteCalculationForm = () => {
               <NumberInput
                 defaultValue={0}
                 min={0}
-                max={10}
+                max={
+                  storeList.length > 0 && storeList.length < 10
+                    ? storeList.length
+                    : 10
+                }
                 onChange={(value) => setNumberStores(value)}
                 isDisabled={loading}
               >
