@@ -193,7 +193,8 @@ const StoreDemand = ({
     if (routeDetailData) {
       const successRouteDetail = await instance
         .post("create/route-detail", routeDetailData)
-        .then((res) => res.data);
+        .then((res) => res.data)
+        .catch((err) => console.log(err));
 
       console.log(successRouteDetail);
 
